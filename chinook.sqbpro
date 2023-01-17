@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/USER/Downloads/chinook.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="3862"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,6:mainalbums"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="albums" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="61"/><column index="2" value="300"/><column index="3" value="59"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="employees" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="82"/><column index="2" value="71"/><column index="3" value="71"/><column index="4" value="124"/><column index="5" value="75"/><column index="6" value="129"/><column index="7" value="129"/><column index="8" value="178"/><column index="9" value="67"/><column index="10" value="44"/><column index="11" value="60"/><column index="12" value="80"/><column index="13" value="115"/><column index="14" value="115"/><column index="15" value="168"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1">SELECT 
+	FirstName,
+	LastName, 
+	Country 
+FROM customers
+LIMIT 15; -- ดึงลูกค้า 15 คน </sql><sql name="SQL 2">SELECT 
+	FirstName,
+	LastName,
+	FirstName || ' ' || LastName As fullname, /* การ merge 2 column เข้าด้วยกัน*/
+	LOWER(FirstName) || '@company.com' As email
+From Customers;</sql><sql name="Creating new column">/* สร้าง New Column */
+SELECT
+	name,
+	ROUND(Milliseconds / 60000.0 , 2)As minute,
+	ROUND(Bytes / (1024 * 1024.0) , 2) As mb /* Megabyte */
+FROM tracks;
+
+-- เติม .0 เพื่อให้ผลจากการคำนวณเป็น real number
+-- ฟังก์ชั่น ROUND คือฟังก์ชั่นที่ใช้กำหนดเลขทศนิยมว่าจะเอากี่ตำแหน่ง)
+</sql><sql name="case when">/* เขียนเงื่อนไข */
+SELECT 
+	Company,
+	CASE
+		WHEN company IS NOT NULL THEN 'Corporat' 
+		ELSE 'END Customer'
+	END 
+FROM customers;</sql><sql name="Working with DateTime">SELECT 
+	InvoiceDate,
+	--strftime('%Y',InvoiceDate) AS year,
+	CAST(strftime('%Y',InvoiceDate) AS INTEGER) AS year,
+	strftime('%m',InvoiceDate) AS month,
+	strftime('%d', InvoiceDate) As day,
+	strftime('%Y-%m', InvoiceDate) As monthid
+FROM invoices
+WHERE year = '2010' -- filter เฉพาะปี 2010
+WHERE year = 2010; -- หลังจากเปลี่ยน character ของ value แล้ว จาก String --&gt; Integer ด้วยฟังก์ชั่น CAST
+
+-- ฟังก์ชั่น strftime เป็นฟังก์ชั่นที่มีอยู่ในโปรแกรมนี้เท่านั้น 
+-- value ในแต่ละ column จะมี character เป็น string
+ </sql><sql name="Selecting data from multiple table">/* การเขียน JOIN เบื้องต้น */ 
+SELECT * FROM artists
+JOIN albums
+ON artists.ArtistId = albums.ArtistId -- สำคัญมาก Primary key = Foreign key
+WHERE artists.ArtistId = 100;
+
+-- การแสดง 2 table พร้อมกัน เสมือนเป็น 1 table</sql><current_tab id="0"/></tab_sql></sqlb_project>
